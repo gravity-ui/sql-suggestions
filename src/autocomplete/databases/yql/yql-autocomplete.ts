@@ -35,7 +35,12 @@ import {
 import {ColumnAliasSymbol, TableSymbol, VariableSymbol} from '../../shared/symbol-table.js';
 import {isStartingToWriteRule} from '../../shared/cursor.js';
 import {shouldSuggestTemplates} from '../../shared/query.js';
-import {EntitySuggestionToYqlEntity, getGranularSuggestions, tokenDictionary} from './helpers';
+import {
+    EntitySuggestionToYqlEntity,
+    checkShouldSuggestKeywords,
+    getGranularSuggestions,
+    tokenDictionary,
+} from './helpers';
 import {EntitySuggestion, InternalSuggestions, YqlAutocompleteResult} from './types';
 import {getVariableSuggestions} from '../../shared/variables';
 import {getExtendedTableSuggestions} from '../../shared/extended-tables';
@@ -539,6 +544,10 @@ function getEnrichAutocompleteResult(parseTreeGetter: GetParseTree<YQLParser>) {
             if (shouldSuggestColumnAliases && suggestColumnAliases) {
                 result.suggestColumnAliases = suggestColumnAliases;
             }
+        }
+
+        if (!checkShouldSuggestKeywords(cursorTokenIndex, tokenStream)) {
+            result.suggestKeywords = [];
         }
 
         return result;

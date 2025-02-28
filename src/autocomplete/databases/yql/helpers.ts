@@ -41,6 +41,13 @@ function isFirstPreviousTokenOfType(
     return false;
 }
 
+export function checkShouldSuggestKeywords(
+    cursorTokenIndex: number,
+    tokenStream: TokenStream,
+): boolean {
+    return tokenStream.get(cursorTokenIndex)?.type !== YQLParser.ID_QUOTED;
+}
+
 function getRuleCheckHelpers(ruleList: c3.RuleList): {
     anyRuleInList: AnyRuleInList;
     allRulesInList: AllRulesInList;
