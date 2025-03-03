@@ -183,6 +183,8 @@ function getParseTree(
             return parser.insertStatement();
         case 'update':
             return parser.updateStatement();
+        case 'select':
+            return parser.statement();
         default:
             return parser.parse();
     }

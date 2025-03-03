@@ -89,8 +89,7 @@ test('should suggest properly after FROM', () => {
     expect(autocompleteResult.suggestViewsOrTables).toEqual(TableOrViewSuggestion.ALL);
 });
 
-// TODO-TRINO: support multi-queries
-test.skip('should suggest ALL tables between statements', () => {
+test('should suggest ALL tables between statements', () => {
     const autocompleteResult = parseTrinoQueryWithCursor(
         'ALTER TABLE catalog.schema.before_table DROP COLUMN id; SELECT * FROM | ; ALTER TABLE catalog.schema.after_table DROP COLUMN id;',
     );

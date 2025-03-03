@@ -20,8 +20,7 @@ test('should suggest properly after INTO', () => {
     expect(autocompleteResult.suggestViewsOrTables).toEqual(TableOrViewSuggestion.ALL);
 });
 
-// TODO-TRINO: support multi-queries
-test.skip('should suggest tables after INSERT INTO between statements', () => {
+test('should suggest tables after INSERT INTO between statements', () => {
     const autocompleteResult = parseTrinoQueryWithCursor(
         'ALTER TABLE catalog.schema.before_table DROP COLUMN id; INSERT INTO | ; ALTER TABLE catalog.schema.after_table DROP COLUMN id;',
     );
@@ -223,15 +222,14 @@ test('should suggest properly after table name with a bracket', () => {
     expect(autocompleteResult.suggestColumns).toEqual(columnSuggestion);
 });
 
-// TODO-TRINO: support multi-queries
-// test('should suggest table name for column between statements', () => {
-//     const autocompleteResult = parseTrinoQueryWithCursor(
-//         'ALTER TABLE before_table DROP COLUMN id; INSERT INTO test_table(| ; ALTER TABLE after_table DROP COLUMN id',
-//     );
-//
-//     const columnSuggestion: ColumnSuggestion = {tables: [{name: 'test_table'}]};
-//     expect(autocompleteResult.suggestColumns).toEqual(columnSuggestion);
-// });
+test('should suggest table name for column between statements', () => {
+    const autocompleteResult = parseTrinoQueryWithCursor(
+        'ALTER TABLE catalog.schema.before_table DROP COLUMN id; INSERT INTO catalog.schema.test_table(| ; ALTER TABLE catalog.schema.after_table DROP COLUMN id',
+    );
+
+    const columnSuggestion: ColumnSuggestion = {tables: [{name: 'catalog.schema.test_table'}]};
+    expect(autocompleteResult.suggestColumns).toEqual(columnSuggestion);
+});
 
 test('should suggest properly after the first column', () => {
     const autocompleteResult = parseTrinoQueryWithCursor(

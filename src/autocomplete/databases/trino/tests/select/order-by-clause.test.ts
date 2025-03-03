@@ -80,8 +80,7 @@ test('should suggest properly after ORDER BY', () => {
     expect(autocompleteResult.suggestColumnAliases).toEqual(columnAliasSuggestion);
 });
 
-// TODO-TRINO: support multi-queries
-test.skip('should suggest properly after ORDER BY between statements', () => {
+test('should suggest properly after ORDER BY between statements', () => {
     const autocompleteResult = parseTrinoQueryWithCursor(
         'ALTER TABLE catalog.schema.before_table DROP COLUMN id; ' +
             'SELECT count(*) as count, test_column t1 FROM catalog.schema.test_table as t ORDER BY | ; ' +
@@ -131,7 +130,9 @@ test.skip('should suggest properly after ORDER BY between statements', () => {
     // expect(autocompleteResult.suggestFunctions).toEqual(true);
     // expect(autocompleteResult.suggestAggregateFunctions).toEqual(true);
 
-    const columnSuggestion: ColumnSuggestion = {tables: [{name: 'test_table', alias: 't'}]};
+    const columnSuggestion: ColumnSuggestion = {
+        tables: [{name: 'catalog.schema.test_table', alias: 't'}],
+    };
     expect(autocompleteResult.suggestColumns).toEqual(columnSuggestion);
 
     const columnAliasSuggestion: ColumnAliasSuggestion[] = [{name: 'count'}, {name: 't1'}];
@@ -195,8 +196,7 @@ test('should suggest properly after ORDER BY in nested statement', () => {
     expect(autocompleteResult.suggestColumnAliases).toEqual(columnAliasSuggestion);
 });
 
-// TODO-TRINO: support multi-queries
-test.skip('should suggest properly after ORDER BY between statements in nested statement', () => {
+test('should suggest properly after ORDER BY between statements in nested statement', () => {
     const autocompleteResult = parseTrinoQueryWithCursor(
         'ALTER TABLE catalog.schema.before_table DROP COLUMN id; ' +
             'SELECT id as id1 FROM (SELECT count(*) as count, test_column t1 FROM catalog.schema.test_table as t ORDER BY | ; ' +
@@ -246,7 +246,9 @@ test.skip('should suggest properly after ORDER BY between statements in nested s
     // expect(autocompleteResult.suggestFunctions).toEqual(true);
     // expect(autocompleteResult.suggestAggregateFunctions).toEqual(true);
 
-    const columnSuggestion: ColumnSuggestion = {tables: [{name: 'test_table', alias: 't'}]};
+    const columnSuggestion: ColumnSuggestion = {
+        tables: [{name: 'catalog.schema.test_table', alias: 't'}],
+    };
     expect(autocompleteResult.suggestColumns).toEqual(columnSuggestion);
 
     const columnAliasSuggestion: ColumnAliasSuggestion[] = [{name: 'count'}, {name: 't1'}];

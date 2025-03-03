@@ -37,8 +37,7 @@ test('should suggest keywords after TABLE', () => {
     expect(autocompleteResult.suggestViewsOrTables).toEqual(TableOrViewSuggestion.ALL);
 });
 
-// TODO-TRINO: support multi-queries
-test.skip('should suggest tables after ALTER TABLE between statements', () => {
+test('should suggest tables after ALTER TABLE between statements', () => {
     const autocompleteResult = parseTrinoQueryWithCursor(
         'DROP VIEW catalog.schema.before_view; ALTER TABLE | ; DROP VIEW catalog.schema.after_view;',
     );
@@ -71,8 +70,7 @@ test('should suggest tables after ALTER VIEW', () => {
     expect(autocompleteResult.suggestViewsOrTables).toEqual(TableOrViewSuggestion.ALL);
 });
 
-// TODO-TRINO: support multi-queries
-test.skip('should suggest tables after ALTER VIEW between statements', () => {
+test('should suggest tables after ALTER VIEW between statements', () => {
     const autocompleteResult = parseTrinoQueryWithCursor(
         'ALTER TABLE catalog.schema.before_table DROP COLUMN id; ALTER VIEW | ; ALTER TABLE catalog.schema.after_table DROP COLUMN id;',
     );

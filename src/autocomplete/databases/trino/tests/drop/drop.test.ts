@@ -44,8 +44,7 @@ test('should suggest views after DROP VIEW', () => {
     expect(autocompleteResult.suggestViewsOrTables).toEqual(TableOrViewSuggestion.ALL);
 });
 
-// TODO-TRINO: support multi-queries
-test.skip('should suggest tables after multiple drop statements', () => {
+test('should suggest tables after multiple drop statements', () => {
     const autocompleteResult = parseTrinoQueryWithCursor(
         'DROP VIEW catalog.schema.test_view; DROP TABLE |',
     );
@@ -54,8 +53,7 @@ test.skip('should suggest tables after multiple drop statements', () => {
     expect(autocompleteResult.suggestViewsOrTables).toEqual(TableOrViewSuggestion.ALL);
 });
 
-// TODO-TRINO: support multi-queries
-test.skip('should suggest views after multiple drop statements', () => {
+test('should suggest views after multiple drop statements', () => {
     const autocompleteResult = parseTrinoQueryWithCursor(
         'DROP TABLE catalog.schema.test_table; DROP VIEW |',
     );

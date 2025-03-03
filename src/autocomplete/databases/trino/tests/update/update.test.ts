@@ -12,8 +12,7 @@ test('should suggest properly after UPDATE', () => {
     expect(autocompleteResult.suggestViewsOrTables).toEqual(TableOrViewSuggestion.ALL);
 });
 
-// TODO-TRINO: support multi-queries
-test.skip('should suggest tables after UPDATE between statements', () => {
+test('should suggest tables after UPDATE between statements', () => {
     const autocompleteResult = parseTrinoQueryWithCursor(
         'ALTER TABLE catalog.schema.before_table DROP COLUMN id; UPDATE | ; ALTER TABLE catalog.schema.after_table DROP COLUMN id;',
     );
